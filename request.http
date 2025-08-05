@@ -1,0 +1,11 @@
+POST http://localhost:4000/api/v1/users HTTP/1.1
+Content-Type: application/json
+
+    {
+    "id":"1235",
+    "name":"Johe",
+    "username":"johndoe",
+    "email":"hola@gmai.com"
+    }
+###
+GET http://localhost:4000/api/v1/users HTTP/1.1
