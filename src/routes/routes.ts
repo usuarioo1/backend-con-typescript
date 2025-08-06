@@ -26,6 +26,20 @@ export default () => {
         }
     });
 
+    router.get("/users/:id", async (req, res) => {
+        const { id } = req.params;
+        try {
+            const user = await userService.findUserById(id);
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            return res.json(user);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Error fetching user" });
+        }
+    });
+
     // Ruta para crear un usuario
     router.post("/users", async (req, res) => {
         try {
