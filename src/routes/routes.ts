@@ -52,5 +52,34 @@ export default () => {
         }
     });
 
+    router.put("/users/:id", async (req, res) => {
+        const { id } = req.params;
+        const updatedUser: User = req.body;
+        try {
+            const result = await userService.updateUser(id, updatedUser);
+            if (!result) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            return res.json(result);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Error updating user" });
+        }
+    });
+
+    router.delete("/users/:id", async (req, res) => {
+        const { id } = req.params;
+        try {
+            const result = await userService.deleteUser(id);
+            if (!result) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            return res.status(204).send(); // <- devuelve 204 No Content
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Error deleting user" });
+        }
+    });
+
     return router;
 };
