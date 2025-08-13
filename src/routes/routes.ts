@@ -6,7 +6,7 @@ import { IRolesRepository, IRolesService } from "../types/RolesType" // <- aseg�
 import { RolesRepository } from "@repositories/rolesRepositories";
 import { RolesService } from "@services/RolesService";
 import { createUser, deleteUser, findUser, findUserById, updateUser } from "@controllers/usersController";
-import { findRoles } from "@controllers/rolesController";
+import { createRol, deleteRol, findRoles, findRolesById, updateRol } from "@controllers/rolesController";
 
 const router: Router = Router();
 
@@ -32,60 +32,14 @@ export default () => {
 
     router.get("/roles", findRoles);
 
-    router.get("/roles/:id", async (req, res) => {
-        const { id } = req.params;
-        try {
-            const user = await rolesService.findRolesById(id);
-            if (!user) {
-                return res.status(404).json({ message: "User not found" });
-            }
-            return res.json(user);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Error fetching user" });
-        }
-    });
+    router.get("/roles/:id", findRolesById);
 
     // Ruta para crear un usuario
-    router.post("/roles", async (req, res) => {
-        try {
-            const newUser: User = req.body;
-            const result = await rolesService.createRoles(newUser);
-            return res.status(201).json(result); // <- antes devolvías newUser y sobraba un paréntesis
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Error creating user" });
-        }
-    });
+    router.post("/roles", createRol );
 
-    router.put("/roles/:id", async (req, res) => {
-        const { id } = req.params;
-        const updatedUser: User = req.body;
-        try {
-            const result = await rolesService.updateRoles(id, updatedUser);
-            if (!result) {
-                return res.status(404).json({ message: "User not found" });
-            }
-            return res.json(result);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Error updating user" });
-        }
-    });
+    router.put("/roles/:id", updateRol);
 
-    router.delete("/roles/:id", async (req, res) => {
-        const { id } = req.params;
-        try {
-            const result = await rolesService.deleteRoles(id);
-            if (!result) {
-                return res.status(404).json({ message: "User not found" });
-            }
-            return res.status(204).send(); // <- devuelve 204 No Content
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Error deleting user" });
-        }
-    });
+    router.delete("/roles/:id", deleteRol);
 
 
     return router;
