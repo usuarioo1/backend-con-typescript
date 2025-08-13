@@ -3,8 +3,8 @@ import {User} from "../types/userTypes";
 
 const userSchema = new Schema<User>({
     name: { type: String, required: true },
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true }
+    username: { type: String, required: false, unique: true },
+    email: { type: String, required: false, unique: true }
 }, {
     timestamps: true,
     versionKey: false
