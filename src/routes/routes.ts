@@ -7,6 +7,7 @@ import { RolesRepository } from "@repositories/rolesRepositories";
 import { RolesService } from "@services/RolesService";
 import { createUser, deleteUser, findUser, findUserById, updateUser } from "@controllers/usersController";
 import { createRol, deleteRol, findRoles, findRolesById, updateRol } from "@controllers/rolesController";
+import { registerUser } from "@controllers/auth/authController";
 
 const router: Router = Router();
 
@@ -40,6 +41,10 @@ export default () => {
     router.put("/roles/:id", updateRol);
 
     router.delete("/roles/:id", deleteRol);
+
+
+    // Ruta para registrar un usuario
+    router.post("/register", registerUser);
 
 
     return router;
